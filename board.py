@@ -8,6 +8,7 @@ class Board:
     player_c = 0
     board_r = 0
     board_c = 0
+    on_path = True
 
     def __init__(self, x, y):
         self.board_r = x
@@ -15,15 +16,29 @@ class Board:
         self.board = [[0] * y for i in range(x)]
         self.player_r = int(len(self.board) / 2)
         self.player_c = int(len(self.board[0])/2)
-        self.gen_board()
+        self.gen_start_board()
         self.board[self.player_r][self.player_c] = "X"
 
+
+    def gen_start_board(self):
+        for r in range(len(self.board)):
+            for c in range(len(self.board[0])):
+                if r == int(len(self.board)/2):
+                    self.board[r][c] = "-"
+                elif c == int(len(self.board[0])/2):
+                    self.board[r][c] = "|"
+                else:
+                    self.board[r][c] = "*"
 
     def gen_board(self):
         for r in range(len(self.board)):
             for c in range(len(self.board[0])):
                 self.board[r][c] = "*"
 
+    def __gen_path(self):
+        row = self.board[4]
+        for c in range(len(row)):
+            row[c] = "-"
 
     def print_board(self):
         os.system("clear")
@@ -68,7 +83,18 @@ class Board:
                 keep_rows = True
 
         if same_board:
-            self.board[old_r][old_c] = "*"
+            if self.on_path:
+                if dir == "w" or dir == "s":
+                    self.board[old_r][old_c] = "|"
+                else:
+                    self.board[old_r][old_c] = "-"
+            else:
+                self.board[old_r][old_c] = "*"
+
+            if self.board[self.player_r][self.player_c] == "-" or self.board[self.player_r][self.player_c] == "|":
+                self.on_path = True
+            else:
+                self.on_path = False
             self.board[self.player_r][self.player_c] = "X"
         else:
             self.__gen_and_update_new_board(keep_rows, keep_cols)

@@ -17,7 +17,7 @@ def main():
     play_map.print_board()
     while True:
         dir = getch.getch()
-        process_input(board, dir)
+        process_input(play_map, dir)
         play_map.print_board()
 
 
