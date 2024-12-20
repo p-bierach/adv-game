@@ -9,7 +9,6 @@ def main():
     play_map = board.Board(BOARD_X, BOARD_Y)
     time.sleep(0.5)
     play_map.print_board()
-    time.sleep(2)
     while True:
         dir = getch.getch()
         play_map.update_player_pos(dir)
