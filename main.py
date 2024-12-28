@@ -1,9 +1,10 @@
-import time
-import board
+import game_map
 import getch
 
-BOARD_X = 7
-BOARD_Y = 11
+TILE_X = 7
+TILE_Y = 11
+BOARD_X = 3
+BOARD_Y = 3
 
 
 def process_input(board, key):
@@ -12,13 +13,12 @@ def process_input(board, key):
         board.update_player_pos(key)
 
 def main():
-    play_map = board.Board(BOARD_X, BOARD_Y)
-    time.sleep(0.5)
-    play_map.print_board()
+    the_map = game_map.GameMap(BOARD_X, BOARD_Y, TILE_X, TILE_Y)
+    the_map.print_curr_tile()
     while True:
         dir = getch.getch()
-        process_input(play_map, dir)
-        play_map.print_board()
+        process_input(the_map, dir)
+        the_map.print_curr_tile()
 
 
 if __name__ == "__main__":
