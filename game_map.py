@@ -24,15 +24,14 @@ class GameMap:
         self.curr_c = int(c/2)
 
     def __gen_map(self):
-        i = 1
         for r in range(0, self.board_r):
             for c in range(0, self.board_c):
-                curr = tile.Tile(self.tile_r, self.tile_c)
-                curr.layout[0][0] = str(i)
-                i+=1
+                if r == int(self.board_r / 2) and c == int(self.board_c / 2):  # middle tile
+                    curr = tile.Tile(self.tile_r, self.tile_c, True)
+                else:
+                    curr = tile.Tile(self.tile_r, self.tile_c, False)
+
                 self.board[r][c] = curr
-                if r == int(self.board_r/2) and c == int(self.board_c/2): #middle tile
-                    curr.last_space = "0"
 
     def print_curr_tile(self):
         self.curr_tile.print_tile()
@@ -123,4 +122,5 @@ class GameMap:
             self.curr_tile.player_r = 0 if old_player_r == self.tile_r-1 else self.tile_r-1
             self.curr_tile.player_c = old_player_c
 
+        self.curr_tile.last_space = self.curr_tile.layout[self.curr_tile.player_r][self.curr_tile.player_c]
         self.curr_tile.layout[self.curr_tile.player_r][self.curr_tile.player_c] = "X"
